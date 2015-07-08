@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "mkdir -p ./dist && rm -rf ./dist/*",
-    "build": "npm run clean && browserify ./index.js --standalone PONP -o ./dist/patterns-on-patterns.js",
+    "build": "npm run clean && browserify ./index.js --standalone PONP -t babelify -o ./dist/patterns-on-patterns.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/JasonStorey/patterns-on-patterns",
   "devDependencies": {
+    "babelify": "^6.1.2",
     "browserify": "^10.2.4"
   }
 }
