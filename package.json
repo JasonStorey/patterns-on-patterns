@@ -1,0 +1,24 @@
+{
+  "name": "patterns-on-patterns",
+  "version": "0.1.0",
+  "description": "Patterns On Patterns",
+  "main": "index.js",
+  "scripts": {
+    "clean": "mkdir -p ./dist && rm -rf ./dist/*",
+    "build": "npm run clean && browserify ./index.js --standalone PONP -o ./dist/patterns-on-patterns.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JasonStorey/patterns-on-patterns.git"
+  },
+  "author": "Jason A. Storey <jason.andrew.storey@gmail.com> (https://github.com/JasonStorey)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JasonStorey/patterns-on-patterns/issues"
+  },
+  "homepage": "https://github.com/JasonStorey/patterns-on-patterns",
+  "devDependencies": {
+    "browserify": "^10.2.4"
+  }
+}
