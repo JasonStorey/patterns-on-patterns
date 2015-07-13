@@ -12,10 +12,20 @@ function createImageElem(src) {
     return img;
 }
 
+function setupLoopScrolling(document) {
+    $(document).scroll(() => {
+        if(document.documentElement.clientHeight + $(document).scrollTop() >= document.body.offsetHeight ) {
+            $(document).scrollTop(0);
+        }
+    });
+}
+
 module.exports = {
   init: config => {
       imageSources
           .map(createImageElem)
           .forEach(elem => config.container.appendChild(elem));
+
+      setupLoopScrolling(config.document);
   }
 };

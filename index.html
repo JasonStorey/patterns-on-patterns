@@ -17,11 +17,15 @@
 </head>
 <body>
     <div id="patterns-container"></div>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="./dist/patterns-on-patterns.js"></script>
     <script>
-        var patternsContainer = document.getElementById('patterns-container');
-        PONP.init({
-            container: patternsContainer
+        $('document', function() {
+            var patternsContainer = document.getElementById('patterns-container');
+            PONP.init({
+                container: patternsContainer,
+                document: window.document
+            });
         });
     </script>
 </body>
