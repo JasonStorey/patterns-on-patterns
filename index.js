@@ -1,14 +1,6 @@
-const imageSources = [
-    'https://placeholdit.imgix.net/~text?txtsize=33&txt=Buddy,&w=320&h=300',
-    'https://placeholdit.imgix.net/~text?txtsize=33&txt=don\'t&w=320&h=300',
-    'https://placeholdit.imgix.net/~text?txtsize=33&txt=buddy&w=320&h=300',
-    'https://placeholdit.imgix.net/~text?txtsize=33&txt=me,&w=320&h=300',
-    'https://placeholdit.imgix.net/~text?txtsize=33&txt=Buddy.&w=320&h=300'
-];
-
-function createImageElem(src) {
+function createImageElem(imageConfig) {
     let img = document.createElement('img');
-    img.setAttribute('src', src);
+    img.setAttribute('src', imageConfig.url);
     return img;
 }
 
@@ -20,11 +12,22 @@ function setupLoopScrolling(document) {
     });
 }
 
+function getImageConfigs() {
+    return new Promise((res, rej) => {
+        $.getJSON('./patterns-config.json')
+            .done(config => res(config.images))
+            .fail(err => rej(err));
+    });
+}
+
 module.exports = {
   init: config => {
-      imageSources
-          .map(createImageElem)
-          .forEach(elem => config.container.appendChild(elem));
+      getImageConfigs()
+          .then(imageConfigs => imageConfigs.map(createImageElem))
+          .then(images => images.forEach(elem => config.container.appendChild(elem)))
+          .catch(err => {
+              console.log(err);
+          });
 
       setupLoopScrolling(config.document);
   }
