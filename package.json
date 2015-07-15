@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "mkdir -p ./dist && rm -rf ./dist/*",
     "build": "npm run clean && browserify ./index.js --standalone PONP -t babelify -o ./dist/patterns-on-patterns.js",
+    "start": "python -m SimpleHTTPServer",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
