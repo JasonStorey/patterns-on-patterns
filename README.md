@@ -11,3 +11,8 @@ Then, build with...
 ```
 > npm run build
 ```
+
+Then, run with...
+```
+> npm run start
+```
