@@ -1,19 +1,16 @@
 {
   "images": [
     {
-      "url": "./images/buddy.png"
+      "url": "./images/1.png"
     },
     {
-      "url": "./images/buddysmall.png"
+      "url": "./images/2.png"
     },
     {
-      "url": "./images/buddy2.png"
+      "url": "./images/3.png"
     },
     {
-      "url": "./images/dont.png"
-    },
-    {
-      "url": "./images/me.png"
+      "url": "./images/4.png"
     }
   ]
 }
