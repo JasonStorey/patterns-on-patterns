@@ -4,31 +4,33 @@ function createImageElem(imageConfig) {
     return img;
 }
 
-function setupLoopScrolling(document) {
+function setupLoopScrolling(document, patternsConfig) {
     $(document).scroll(() => {
-        if(document.documentElement.clientHeight + $(document).scrollTop() >= document.body.offsetHeight ) {
+        if($(document).scrollTop() >= patternsConfig.height) {
             $(document).scrollTop(0);
         }
     });
+    return patternsConfig;
 }
 
-function getImageConfigs() {
+function getPatternsConfig() {
     return new Promise((res, rej) => {
         $.getJSON('./patterns-config.json')
-            .done(config => res(config.images))
+            .done(config => res(config))
             .fail(err => rej(err));
     });
 }
 
 module.exports = {
   init: config => {
-      getImageConfigs()
-          .then(imageConfigs => imageConfigs.map(createImageElem))
+
+      getPatternsConfig()
+          .then(patternsConfig => setupLoopScrolling(config.document, patternsConfig))
+          .then(patternsConfig => patternsConfig.images.concat(patternsConfig.images))
+          .then(imagesConfig => imagesConfig.map(createImageElem))
           .then(images => images.forEach(elem => config.container.appendChild(elem)))
           .catch(err => {
               console.log(err);
           });
-
-      setupLoopScrolling(config.document);
   }
 };
