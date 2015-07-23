@@ -1,3 +1,12 @@
+window.requestAnimFrame = (function(){
+    return  window.requestAnimationFrame   ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();
+
 function getPatternsConfig() {
     return new Promise((res, rej) => {
         $.getJSON('./patterns-config.json')
@@ -7,28 +16,52 @@ function getPatternsConfig() {
 }
 
 function setupMouseMovement(mainConfig) {
-    var $container = $(mainConfig.container),
-        midPoint = $container.height() / 2,
-        velocityY = 0,
-        currentY = 0,
-        drag = 0.4;
+    var mouseY = 0,
+        layers;
 
-    $(mainConfig.document).on('mousemove', (event) => {
-        velocityY = getYVelocity(velocityY, event.clientY, midPoint) * (1 - drag);
+    $(mainConfig.document).on('mousemove', event => mouseY = event.clientY);
+
+    layers = mainConfig.patternsConfig.images.map(imageConfig => {
+        return {
+            elem: imageConfig.layer,
+            midPoint: imageConfig.layer.height() / 2,
+            velocityY: 0,
+            currentY: Math.random() * 1000,
+            drag: 0.4,
+            speed: 121 - (imageConfig.speed * 100)
+        };
     });
 
-    function updateBackgroundPosition() {
-        currentY += velocityY;
-        $container.css('background-position', 'center ' + currentY + 'px');
-        setTimeout(updateBackgroundPosition, 16);
+    function updateBackgroundPositions() {
+        layers.forEach(layerConfig => {
+            layerConfig.velocityY = getYVelocity(layerConfig.velocityY, mouseY, layerConfig.midPoint, layerConfig.speed) * (1 - layerConfig.drag);
+            layerConfig.currentY += layerConfig.velocityY;
+            layerConfig.elem.css('background-position', 'center ' + layerConfig.currentY + 'px');
+        });
+
+        requestAnimFrame(updateBackgroundPositions);
     }
 
-    updateBackgroundPosition();
+    updateBackgroundPositions();
 }
 
-function getYVelocity(velocityY, mouseY, midY) {
+function getYVelocity(velocityY, mouseY, midY, speed) {
     var deltaY = mouseY - midY;
-    return velocityY + (deltaY / 10);
+    return velocityY + (deltaY / speed);
+}
+
+function createLayer(imageConfig) {
+    return $('<div>').css({
+        'position': 'absolute',
+        'width': imageConfig.width + 'px',
+        'height': '100%',
+        'left': imageConfig.positionFromLeft,
+        'margin-left': '-' + Math.round(imageConfig.width / 2) + 'px',
+        'background-image': 'url(' + imageConfig.url + ')',
+        'background-repeat': 'repeat-y',
+        'background-position': 'centre',
+        'z-index': imageConfig.zIndex
+    });
 }
 
 module.exports = {
@@ -36,13 +69,16 @@ module.exports = {
 
       getPatternsConfig()
           .then(patternsConfig => {
-              mainConfig.patternsConfig = patternsConfig;
+              var $container = $(mainConfig.container);
 
-              $(mainConfig.container).css({
-                  'background-image': 'url(' + patternsConfig.images[0].url + ')',
-                  'background-repeat': 'repeat-y',
-                  'background-position': 'centre'
-              });
+              patternsConfig.images
+                  .map(imageConfig => createLayer(imageConfig))
+                  .forEach((layer, index) => {
+                      $container.append(layer);
+                      patternsConfig.images[index].layer = layer;
+                  });
+
+              mainConfig.patternsConfig = patternsConfig;
 
               return mainConfig;
           })

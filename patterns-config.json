@@ -1,8 +1,25 @@
 {
-  "height": 1200,
   "images": [
     {
-      "url": "./images/complete.png"
+      "url": "./images/complete.png",
+      "width": 320,
+      "positionFromLeft": "50%",
+      "speed": 0.8,
+      "zIndex": 3
+    },
+    {
+      "url": "./images/background-1.png",
+      "width": 192,
+      "positionFromLeft": "25%",
+      "speed": 0.3,
+      "zIndex": 2
+    },
+    {
+      "url": "./images/background-2.png",
+      "width": 96,
+      "positionFromLeft": "75%",
+      "speed": 0.001,
+      "zIndex": 1
     }
   ]
 }
