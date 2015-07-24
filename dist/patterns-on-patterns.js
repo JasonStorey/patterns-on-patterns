@@ -32,7 +32,7 @@ function setupMouseMovement(mainConfig) {
             velocityY: 0,
             currentY: Math.random() * 1000,
             drag: 0.4,
-            speed: 121 - imageConfig.speed * 100
+            speed: 251 - imageConfig.speed * 250
         };
     });
 
@@ -62,7 +62,7 @@ function createLayer(imageConfig) {
         'left': imageConfig.positionFromLeft,
         'margin-left': '-' + Math.round(imageConfig.width / 2) + 'px',
         'background-image': 'url(' + imageConfig.url + ')',
-        'background-repeat': 'repeat-y',
+        'background-repeat': 'repeat',
         'background-position': 'centre',
         'z-index': imageConfig.zIndex
     });
