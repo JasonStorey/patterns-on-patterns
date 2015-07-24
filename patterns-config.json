@@ -4,20 +4,34 @@
       "url": "./images/complete.png",
       "width": 320,
       "positionFromLeft": "50%",
-      "speed": 0.8,
-      "zIndex": 3
+      "speed": 0.75,
+      "zIndex": 5
+    },
+    {
+      "url": "./images/background-0.png",
+      "width": 800,
+      "positionFromLeft": "45%",
+      "speed": 0.7,
+      "zIndex": 4
     },
     {
       "url": "./images/background-1.png",
-      "width": 192,
-      "positionFromLeft": "25%",
+      "width": 800,
+      "positionFromLeft": "50%",
+      "speed": 0.4,
+      "zIndex": 3
+    },
+    {
+      "url": "./images/background-0.png",
+      "width": 800,
+      "positionFromLeft": "55%",
       "speed": 0.3,
       "zIndex": 2
     },
     {
       "url": "./images/background-2.png",
-      "width": 96,
-      "positionFromLeft": "75%",
+      "width": 800,
+      "positionFromLeft": "50%",
       "speed": 0.001,
       "zIndex": 1
     }
