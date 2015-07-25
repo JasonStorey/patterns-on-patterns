@@ -1,11 +1,8 @@
-window.requestAnimFrame = (function(){
-    return  window.requestAnimationFrame   ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame    ||
-        function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
+var requestAnimFrame =
+    window.requestAnimationFrame       ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame    ||
+    function(callback) { window.setTimeout(callback, 1000 / 60); };
 
 function getPatternsConfig() {
     return new Promise((res, rej) => {
@@ -34,20 +31,15 @@ function setupMouseMovement(mainConfig) {
 
     function updateBackgroundPositions() {
         layers.forEach(layerConfig => {
-            layerConfig.velocityY = getYVelocity(layerConfig.velocityY, mouseY, layerConfig.midPoint, layerConfig.speed) * (1 - layerConfig.drag);
+            layerConfig.velocityY = (layerConfig.velocityY + (mouseY - layerConfig.midPoint) / layerConfig.speed) * (1 - layerConfig.drag);
             layerConfig.currentY += layerConfig.velocityY;
-            layerConfig.elem.css('background-position', 'center ' + layerConfig.currentY + 'px');
+            layerConfig.elem[0].style.backgroundPosition = 'center ' + layerConfig.currentY + 'px';
         });
 
         requestAnimFrame(updateBackgroundPositions);
     }
 
     updateBackgroundPositions();
-}
-
-function getYVelocity(velocityY, mouseY, midY, speed) {
-    var deltaY = mouseY - midY;
-    return velocityY + (deltaY / speed);
 }
 
 function createLayer(imageConfig) {
