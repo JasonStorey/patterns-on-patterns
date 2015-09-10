@@ -1,4 +1,4 @@
-var requestAnimFrame =
+let requestAnimFrame =
     window.requestAnimationFrame       ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame    ||
@@ -13,7 +13,7 @@ function getPatternsConfig() {
 }
 
 function setupMouseMovement(mainConfig) {
-    var mouseY = 0,
+    let mouseY = 0,
         layers;
 
     $(mainConfig.document).on('mousemove', event => mouseY = event.clientY);
@@ -61,7 +61,7 @@ module.exports = {
 
       getPatternsConfig()
           .then(patternsConfig => {
-              var $container = $(mainConfig.container);
+              let $container = $(mainConfig.container);
 
               patternsConfig.images
                   .map(imageConfig => createLayer(imageConfig))
